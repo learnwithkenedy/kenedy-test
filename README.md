@@ -1,7 +1,9 @@
 # Employee Management
 
 Author : Kenedy Nopriansyah
+
 Email : kenedinovriansyah@gmail.com
+
 Youtube: https://www.youtube.com/@learnwithkenedy
 
 Technical assessment project for Backoffice Frontend.
