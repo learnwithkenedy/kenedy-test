@@ -145,6 +145,7 @@ export class EmployeeListComponent implements OnInit {
     this.applyFilter();
     this.notificationService.show(
       `Delete employee: ${emp.firstName} ${emp.lastName}`,
+      'success',
     );
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-employee-edit',
@@ -44,6 +45,7 @@ export class EmployeeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
     private router: Router,
+    private notificationService: NotificationService,
   ) {}
 
   get filteredGroups(): string[] {
@@ -104,13 +106,26 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   save(): void {
+    const index = Number(this.route.snapshot.paramMap.get('id'));
     this.submitted = true;
     if (!this.allFieldsValid()) return;
-    this.employeeService.update(
-      this.form,
-      Number(this.route.snapshot.paramMap.get('id')),
-    );
-    this.router.navigate(['/employees']);
+
+    if (
+      this.employeeService.checkUsernameAndEmail(
+        this.form.username,
+        this.form.email,
+        index,
+      )
+    ) {
+      this.notificationService.show(
+        'Username or email already exists',
+        'error',
+      );
+    } else {
+      this.employeeService.update(this.form, index);
+      this.router.navigate(['/employees']);
+      this.notificationService.show('Edit has been successfully', 'success');
+    }
   }
 
   cancel(): void {

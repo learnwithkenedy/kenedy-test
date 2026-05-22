@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 
 export interface Notification {
   message: string;
+  type: 'success' | 'error';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +11,7 @@ export class NotificationService {
   private notificationSubject = new Subject<Notification>();
   notifications$ = this.notificationSubject.asObservable();
 
-  show(message: string): void {
-    this.notificationSubject.next({ message });
+  show(message: string, type: 'success' | 'error'): void {
+    this.notificationSubject.next({ message, type });
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Employee } from '../../models/employee.model';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-employee-add',
@@ -43,6 +44,7 @@ export class EmployeeAddComponent {
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
+    private notificationService: NotificationService,
   ) {}
 
   get filteredGroups(): string[] {
@@ -105,8 +107,20 @@ export class EmployeeAddComponent {
   save(): void {
     this.submitted = true;
     if (!this.allFieldsValid()) return;
-    this.employeeService.add({ ...this.form });
-    this.router.navigate(['/employees']);
+    if (
+      this.employeeService.checkUsernameAndEmail(
+        this.form.username,
+        this.form.email,
+      )
+    ) {
+      this.notificationService.show(
+        'Username or email already exists',
+        'error',
+      );
+    } else {
+      this.employeeService.add({ ...this.form });
+      this.router.navigate(['/employees']);
+    }
   }
 
   cancel(): void {

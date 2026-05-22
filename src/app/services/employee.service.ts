@@ -98,6 +98,19 @@ export class EmployeeService {
     return this.employees.find((_, idx) => idx === index);
   }
 
+  checkUsernameAndEmail(username: string, email: string, index?: number) {
+    return this.employees.find((emp, idx) => {
+      if (!index) {
+        return (
+          (emp.username === username && idx !== index) ||
+          (emp.email === email && idx !== index)
+        );
+      } else {
+        return emp.username === username || emp.email === email;
+      }
+    });
+  }
+
   add(employee: Employee): void {
     this.employees.push(employee);
   }
