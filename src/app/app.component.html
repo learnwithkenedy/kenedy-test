@@ -1,0 +1,8 @@
+<div
+  *ngIf="notification"
+  class="fixed top-4 right-4 z-50 px-5 py-3 rounded-lg text-white font-medium shadow-lg transition-all duration-300"
+  [class]="typeClass"
+>
+  {{ notification.message }}
+</div>
+<router-outlet></router-outlet>

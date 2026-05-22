@@ -1,0 +1,109 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-6"
+>
+  <div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">Employee Detail</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="employee">
+        <div class="md:col-span-2">
+          <div class="bg-indigo-50 rounded-xl p-4 text-center">
+            <div
+              class="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-2"
+            >
+              {{ employee.firstName.charAt(0)
+              }}{{ employee.lastName.charAt(0) }}
+            </div>
+            <h2 class="text-xl font-bold text-gray-800">
+              {{ employee.firstName }} {{ employee.lastName }}
+            </h2>
+            <p class="text-indigo-600 font-medium">{{ employee.group }}</p>
+          </div>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Username</label
+          >
+          <p class="text-gray-800 font-medium mt-1">{{ employee.username }}</p>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Status</label
+          >
+          <p class="mt-1">
+            <span
+              class="px-3 py-1 rounded-full text-xs font-medium"
+              [class.bg-green-50]="employee.status === 'Active'"
+              [class.text-green-700]="employee.status === 'Active'"
+              [class.bg-red-50]="employee.status === 'Inactive'"
+              [class.text-red-700]="employee.status === 'Inactive'"
+              [class.bg-amber-50]="
+                employee.status !== 'Active' && employee.status !== 'Inactive'
+              "
+              [class.text-amber-700]="
+                employee.status !== 'Active' && employee.status !== 'Inactive'
+              "
+            >
+              {{ employee.status }}
+            </span>
+          </p>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Email</label
+          >
+          <p class="text-gray-800 mt-1">{{ employee.email }}</p>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Birth Date</label
+          >
+          <p class="text-gray-800 mt-1">{{ formatDate(employee.birthDate) }}</p>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Basic Salary</label
+          >
+          <p class="text-gray-800 mt-1 font-semibold text-lg">
+            {{ formatSalary(employee.basicSalary) }}
+          </p>
+        </div>
+
+        <div>
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Group</label
+          >
+          <p class="text-gray-800 mt-1">{{ employee.group }}</p>
+        </div>
+
+        <div class="md:col-span-2">
+          <label
+            class="block text-xs font-medium text-gray-500 uppercase tracking-wide"
+            >Description</label
+          >
+          <p class="text-gray-800 mt-1">{{ employee.description }}</p>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <button
+          (click)="goBack()"
+          class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
