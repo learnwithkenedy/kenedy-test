@@ -10,7 +10,7 @@ Technical assessment project for Backoffice Frontend.
 
 ## Environment
 
-- Node.js >= 16.x
+- Node.js >= 22.14.x
 - Angular CLI 16.x
 - npm 9.x+
 
