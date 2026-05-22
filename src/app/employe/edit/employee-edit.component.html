@@ -1,0 +1,241 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-6"
+>
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Employee</h1>
+
+      <form (ngSubmit)="save()" #addForm="ngForm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Username <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              [(ngModel)]="form.username"
+              name="username"
+              required
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isFieldInvalid('username')"
+            />
+            <p
+              *ngIf="isFieldInvalid('username')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Username is required
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >First Name <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              [(ngModel)]="form.firstName"
+              name="firstName"
+              required
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isFieldInvalid('firstName')"
+            />
+            <p
+              *ngIf="isFieldInvalid('firstName')"
+              class="text-red-500 text-xs mt-1"
+            >
+              First name is required
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Last Name <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              [(ngModel)]="form.lastName"
+              name="lastName"
+              required
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isFieldInvalid('lastName')"
+            />
+            <p
+              *ngIf="isFieldInvalid('lastName')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Last name is required
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Email <span class="text-red-500">*</span></label
+            >
+            <input
+              type="email"
+              [(ngModel)]="form.email"
+              name="email"
+              required
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="
+                isFieldInvalid('email') || isEmailInvalid()
+              "
+            />
+            <p
+              *ngIf="isFieldInvalid('email')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Email is required
+            </p>
+            <p
+              *ngIf="!isFieldInvalid('email') && isEmailInvalid()"
+              class="text-red-500 text-xs mt-1"
+            >
+              Invalid email format
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Birth Date <span class="text-red-500">*</span></label
+            >
+            <input
+              type="date"
+              [ngModel]="form.birthDate | date: 'yyyy-MM-dd'"
+              (ngModelChange)="onDateChange($event)"
+              name="birthDate"
+              required
+              [attr.max]="today"
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isDateInvalid()"
+            />
+            <p *ngIf="isDateInvalid()" class="text-red-500 text-xs mt-1">
+              Birth date must be before today
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Basic Salary <span class="text-red-500">*</span></label
+            >
+            <input
+              type="number"
+              [(ngModel)]="form.basicSalary"
+              name="basicSalary"
+              required
+              min="0"
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isFieldInvalid('basicSalary')"
+            />
+            <p
+              *ngIf="isFieldInvalid('basicSalary')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Basic salary is required
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Status <span class="text-red-500">*</span></label
+            >
+            <select
+              [(ngModel)]="form.status"
+              name="status"
+              required
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition bg-white"
+              [class.border-red-400]="isFieldInvalid('status')"
+            >
+              <option value="" disabled>Select status</option>
+              <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+            </select>
+            <p
+              *ngIf="isFieldInvalid('status')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Status is required
+            </p>
+          </div>
+
+          <div class="relative">
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Group <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              [(ngModel)]="groupSearch"
+              name="groupSearch"
+              (focus)="onGroupInputFocus()"
+              (blur)="onGroupInputBlur()"
+              (input)="showGroupDropdown = true"
+              placeholder="Search group..."
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              [class.border-red-400]="isFieldInvalid('group')"
+            />
+            <input type="hidden" [(ngModel)]="form.group" name="group" />
+            <div
+              *ngIf="showGroupDropdown"
+              class="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-40 overflow-y-auto"
+            >
+              <div
+                *ngFor="let g of filteredGroups"
+                (mousedown)="selectGroup(g)"
+                class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+              >
+                {{ g }}
+              </div>
+              <div
+                *ngIf="filteredGroups.length === 0"
+                class="px-4 py-2 text-gray-400 text-sm"
+              >
+                No groups found
+              </div>
+            </div>
+            <p
+              *ngIf="isFieldInvalid('group')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Group is required
+            </p>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Description <span class="text-red-500">*</span></label
+            >
+            <textarea
+              [(ngModel)]="form.description"
+              name="description"
+              required
+              rows="3"
+              class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-none"
+              [class.border-red-400]="isFieldInvalid('description')"
+            ></textarea>
+            <p
+              *ngIf="isFieldInvalid('description')"
+              class="text-red-500 text-xs mt-1"
+            >
+              Description is required
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-8">
+          <button
+            type="button"
+            (click)="cancel()"
+            class="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

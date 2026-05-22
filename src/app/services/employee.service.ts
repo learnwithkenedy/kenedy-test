@@ -94,14 +94,16 @@ export class EmployeeService {
     return this.employees.find((e) => e.username === username);
   }
 
+  getByIndex(index: number): Employee | undefined {
+    return this.employees.find((_, idx) => idx === index);
+  }
+
   add(employee: Employee): void {
     this.employees.push(employee);
   }
 
-  update(employee: Employee): void {
-    const idx = this.employees.findIndex(
-      (e) => e.username === employee.username,
-    );
+  update(employee: Employee, index: number): void {
+    const idx = this.employees.findIndex((_, idx) => idx === index);
     if (idx !== -1) this.employees[idx] = employee;
   }
 

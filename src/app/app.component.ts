@@ -26,15 +26,4 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
-
-  get typeClass(): string {
-    if (!this.notification) return '';
-    const map: Record<string, string> = {
-      warning: 'bg-amber-500',
-      error: 'bg-red-500',
-      success: 'bg-green-500',
-      info: 'bg-indigo-500',
-    };
-    return map[this.notification.type] || 'bg-indigo-500';
-  }
 }

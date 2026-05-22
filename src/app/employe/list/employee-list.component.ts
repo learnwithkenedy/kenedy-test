@@ -131,10 +131,12 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onEdit(emp: Employee): void {
-    this.notificationService.show(
-      `Edit employee: ${emp.firstName} ${emp.lastName}`,
-      'warning',
-    );
+    this.router.navigate([
+      '/employees/edit/',
+      this.employeeService
+        .getAll()
+        .findIndex((i) => i.username == emp.username),
+    ]);
   }
 
   onDelete(emp: Employee): void {
@@ -143,7 +145,6 @@ export class EmployeeListComponent implements OnInit {
     this.applyFilter();
     this.notificationService.show(
       `Delete employee: ${emp.firstName} ${emp.lastName}`,
-      'error',
     );
   }
 
