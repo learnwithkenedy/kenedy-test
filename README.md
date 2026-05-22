@@ -1,6 +1,8 @@
-# Author: Kenedy Nopriansyah
+Author : Kenedy Nopriansyah
 
-# Email: kenedinovriansyah@gmail.com
+Email : kenedinovriansyah@gmail.com
+
+Youtube: https://www.youtube.com/@learnwithkenedy
 
 # Employee Management
 
